@@ -9,7 +9,7 @@ pipeline {
         }
     stage('Transfer data from jenkins to ansible machine ') {
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'Jenkins-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'rsync -e ssh /var/lib/jenkins/workspace/Second-project/Dockerfile root@18.223.106.98:/project', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'Jenkins-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'rsync -e ssh /var/lib/jenkins/workspace/Second-project/Dockerfile root@18.223.106.98:/var/www/html', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
            }
         }
     }
