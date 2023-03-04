@@ -1,10 +1,16 @@
-FROM rupeshsaini09/centos
-RUN yum install httpd unzip -y
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page287/eflyer.zip /var/www/html
-WORKDIR /var/www/html
-RUN unzip eflyer.zip
-RUN rm -rf eflyer.zip
-RUN cp -rf html/* .
-RUN rm -rf html
-Expose 80
-CMD httpd -DFOREGROUND
+pipeline {
+    agent any
+
+    stages {
+        stage('Download date from github account') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Shashi771996/Second-project.git'
+            }
+        }
+    stage('Transfer data from jenkins to ansible machine ') {
+            steps {
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'Jenkins-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'rsync -e ssh /var/lib/jenkins/workspace/Second-project/Dockerfile root@18.223.106.98:/var/www/html', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+           }
+        }
+    }
+}
